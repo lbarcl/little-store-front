@@ -9,7 +9,7 @@
   class="variant-filled-surface overflow-hidden m-4 rounded-md flex lg:block hover:scale-105 transition-transform duration-300 shadow-md"
 >
   <LazyImage
-    Class="aspect-square w-1/3 h-1/2 sm:w-1/2 sm:h-full lg:h-2/3 lg:w-full"
+    Class="aspect-square w-24 sm:w-1/2 sm:h-full lg:h-2/3 lg:w-full"
     src={productData.picture}
     alt="thumbnail"
   />
