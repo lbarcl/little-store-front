@@ -1,38 +1,51 @@
-# create-svelte
+# Haydarpaşa TSKEV Kantin Listesi
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Bu proje, Haydarpaşa TSKEV kantinindeki ürünlerin listesini sunan, can sıkıntısından yapılmış basit bir internet sitesidir. Modern web teknolojileri kullanılarak oluşturulmuş olup, şık ve duyarlı bir arayüz sunmaktadır. Mevcut bazı özellikler ve ileride eklenmesi planlanan özellikler mevcuttur.
 
-## Creating a project
+## Özellikler
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Ürün Arama**: Kullanıcıların ürünleri hızlıca bulabilmesi için tam işlevsel bir arama özelliği.
+- **Duyarlı Tasarım**: Tailwind CSS ile oluşturulmuş duyarlı bir tasarım, tüm cihazlarda uyumlu.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Kullanılan Teknolojiler
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **Svelte + SvelteKit**: İnteraktif kullanıcı arayüzü ve yönlendirme işlemleri için.
+- **Tailwind CSS**: Uygulamanın stilini ve duyarlılığını sağlamak için.
+- **Skeleton**: Ekstra UI bileşenleri için.
+- **Supabase**: Ürün bilgilerini depolamak için kullanılan backend veritabanı.
 
-## Developing
+## Gelecek Planları
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- **Kategori Seçimi**: Yakında kullanıcılar ürünleri kategoriye göre filtreleyebilecek.
+- **Günlük Yemek Listesi**: Günlük yemek menüsünü gösterecek bir özellik planlanıyor.
 
-```bash
-npm run dev
+## Uyarılar
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- **Ürün Resimleri**: Ürünlerin resimleri gerçeği yansıtmayabilir.
 
-## Building
+## Kurulum ve Yükleme
 
-To create a production version of your app:
+1. Depoyu klonlayın.
+   ```bash
+   git clone https://github.com/lbarcl/haydarpasa-tskev-kantin.git
+   ```
+2. Proje dizinine gidin.
+   ```bash
+   cd haydarpasa-tskev-kantin
+   ```
+3. Gerekli bağımlılıkları yükleyin.
+   ```bash
+   npm install
+   ```
+4. Geliştirme sunucusunu başlatın.
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run build
-```
+## Katkılar
 
-You can preview the production build with `npm run preview`.
+Herhangi bir öneriniz ya da fikriniz varsa, sorun açabilir ya da pull request gönderebilirsiniz!
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Lisans
+
+Bu proje WTFPL Lisansı altında lisanslanmıştır.
