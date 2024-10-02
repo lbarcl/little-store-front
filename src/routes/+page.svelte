@@ -3,7 +3,7 @@
   import Item from "../modules/Item.svelte";
 
   import type { PageData } from "./$types";
-  import { fetchProducts } from "$lib";
+  import { fetchProducts } from "$lib/supa";
 
   export let data: PageData;
   let page = 2;

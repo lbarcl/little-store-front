@@ -1,5 +1,5 @@
 import type { PageLoad } from "./$types";
-import { SClient } from "$lib";
+import { SClient } from "$lib/supa";
 import { error as e } from "@sveltejs/kit";
 
 export const load: PageLoad = async ({ params }) => {
