@@ -143,6 +143,94 @@
 <div class="hidden md:grid grid-cols-5 w-full h-full">
   <!-- Left Bar -->
   <div class="variant-filled-surface w-full h-full col-span-1">
+    <div class="sticky top-0">
+      <!-- Search Bar -->
+      <div
+        class="flex px-4 py-3 border-b border-[#333] overflow-hidden max-w-md mx-auto font-[sans-serif]"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 192.904 192.904"
+          width="18px"
+          class="mr-3"
+          fill="white"
+        >
+          <path
+            d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"
+          >
+          </path>
+        </svg>
+        <input
+          type="text"
+          placeholder="Ürün..."
+          class="variant-filled-surface rounded-md w-full focus:outline-none border-none outline-none text-sm"
+          bind:value={query}
+          on:input={handleSearchInput}
+        />
+      </div>
+
+      <!-- Categories -->
+      <Accordion autocollapse>
+        {#each Object.keys(data.categories) as key}
+          <AccordionItem>
+            <svelte:fragment slot="summary">{key}</svelte:fragment>
+            <svelte:fragment slot="content">
+              <div class="divide-y divide-slate-400">
+                {#each data.categories[key] as sub}
+                  {#if filters.includes(sub.id)}
+                    <div class="m-2 bg-primary-500/30 p-2 rounded-md">
+                      <button
+                        on:click={() => {
+                          // Remove sub.id from filters
+                          filters = filters.filter((f) => f !== sub.id);
+                          handleFilters();
+                        }}
+                      >
+                        {sub.sub}
+                      </button>
+                    </div>
+                  {:else}
+                    <div class="m-2 p-2">
+                      <button
+                        on:click={() => {
+                          // Add sub.id to filters
+                          filters = [...filters, sub.id];
+                          handleFilters();
+                        }}
+                      >
+                        {sub.sub}
+                      </button>
+                    </div>
+                  {/if}
+                {/each}
+              </div>
+            </svelte:fragment>
+          </AccordionItem>
+        {/each}
+      </Accordion>
+    </div>
+    <div class="fixed bottom-1 left-1 flex">
+      <a href="https://github.com/lbarcl/haydarpasa-tskev-kantin">
+        <img src="/github-mark-white.svg" alt="github logo" class="h-8" /></a
+      >
+      <p class="pl-2 pt-2">Made By lbarcl.</p>
+    </div>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="col-span-4 sm:grid sm:grid-cols-2 h-fit lg:grid-cols-4 lg:px-4">
+    {#each data.items as item}
+      <Item productData={item} />
+    {/each}
+
+    {#if loading}
+      <div>Loading more items...</div>
+    {/if}
+  </div>
+</div>
+
+<div class="md:hidden">
+  <div class="sticky top-0 variant-filled-surface">
     <!-- Search Bar -->
     <div
       class="flex px-4 py-3 border-b border-[#333] overflow-hidden max-w-md mx-auto font-[sans-serif]"
@@ -167,50 +255,27 @@
         on:input={handleSearchInput}
       />
     </div>
-
-    <!-- Categories -->
-    <Accordion autocollapse>
-      {#each Object.keys(data.categories) as key}
-        <AccordionItem>
-          <svelte:fragment slot="summary">{key}</svelte:fragment>
-          <svelte:fragment slot="content">
-            <div class="divide-y divide-slate-400">
-              {#each data.categories[key] as sub}
-                {#if filters.includes(sub.id)}
-                  <div class="m-2 bg-primary-500/30 p-2 rounded-md">
-                    <button
-                      on:click={() => {
-                        // Remove sub.id from filters
-                        filters = filters.filter((f) => f !== sub.id);
-                        handleFilters();
-                      }}
-                    >
-                      {sub.sub}
-                    </button>
-                  </div>
-                {:else}
-                  <div class="m-2 p-2">
-                    <button
-                      on:click={() => {
-                        // Add sub.id to filters
-                        filters = [...filters, sub.id];
-                        handleFilters();
-                      }}
-                    >
-                      {sub.sub}
-                    </button>
-                  </div>
-                {/if}
-              {/each}
-            </div>
-          </svelte:fragment>
-        </AccordionItem>
+    <div class="flex overflow-auto max-w-md mx-auto">
+      {#each Object.keys(data.categories) as c}
+        <div class="pr-2">
+          <button
+            class="chip {shortCategories[c]
+              ? 'variant-filled'
+              : 'variant-soft'}"
+            on:click={() => {
+              handleShortFilters(c);
+            }}
+            on:keypress
+          >
+            <span class="capitalize">{c}</span>
+          </button>
+        </div>
       {/each}
-    </Accordion>
+    </div>
   </div>
 
   <!-- Product Grid -->
-  <div class="col-span-4 sm:grid sm:grid-cols-2 h-fit lg:grid-cols-4 lg:px-4">
+  <div class="sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:px-4 mb-2">
     {#each data.items as item}
       <Item productData={item} />
     {/each}
@@ -219,57 +284,11 @@
       <div>Loading more items...</div>
     {/if}
   </div>
-</div>
 
-<div class="md:hidden">
-  <!-- Search Bar -->
-  <div
-    class="flex px-4 py-3 border-b border-[#333] overflow-hidden max-w-md mx-auto font-[sans-serif]"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 192.904 192.904"
-      width="18px"
-      class="mr-3"
-      fill="white"
+  <div class="fixed bottom-0 w-full variant-filled-surface flex p-1">
+    <a href="https://github.com/lbarcl/haydarpasa-tskev-kantin">
+      <img src="/github-mark-white.svg" alt="github logo" class="h-8" /></a
     >
-      <path
-        d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"
-      >
-      </path>
-    </svg>
-    <input
-      type="text"
-      placeholder="Ürün..."
-      class="variant-filled-surface rounded-md w-full focus:outline-none border-none outline-none text-sm"
-      bind:value={query}
-      on:input={handleSearchInput}
-    />
-  </div>
-  <div class="flex overflow-auto max-w-md mx-auto">
-    {#each Object.keys(data.categories) as c}
-      <div class="pr-2">
-        <button
-          class="chip {shortCategories[c] ? 'variant-filled' : 'variant-soft'}"
-          on:click={() => {
-            handleShortFilters(c);
-          }}
-          on:keypress
-        >
-          <span class="capitalize">{c}</span>
-        </button>
-      </div>
-    {/each}
-  </div>
-
-  <!-- Product Grid -->
-  <div class="sm:grid sm:grid-cols-2 lg:grid-cols-4 lg:px-4">
-    {#each data.items as item}
-      <Item productData={item} />
-    {/each}
-
-    {#if loading}
-      <div>Loading more items...</div>
-    {/if}
+    <p class="pl-2 pt-1">Made By lbarcl.</p>
   </div>
 </div>
