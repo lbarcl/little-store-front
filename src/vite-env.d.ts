@@ -3,6 +3,6 @@
 
 declare module "$env/dynamic/private" {
   export const env: {
-    SUPABASE_KEY: string;
+    VITE_SUPABASE_KEY: string;
   };
 }
