@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item, Category } from "$lib";
+  import type { Item } from "$lib";
   import LazyImage from "./LazyImage.svelte";
 
   export let productData: Item;
