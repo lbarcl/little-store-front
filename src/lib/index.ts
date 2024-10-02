@@ -21,7 +21,7 @@ const p = process?.env ? process.env : import.meta.env;
 
 export const SClient = createClient<Database>(
   "https://vyssbmnzigywmtcttpul.supabase.co",
-  p.SUPABASE_KEY
+  process.env.SUPABASE_KEY
 );
 
 export async function fetchProducts(
