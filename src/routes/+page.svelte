@@ -3,7 +3,7 @@
   import Item from "../modules/Item.svelte";
 
   import type { PageData } from "./$types";
-  import { SClient } from "$lib";
+  import { fetchProducts } from "$lib";
 
   export let data: PageData;
   let page = 2;
@@ -14,32 +14,8 @@
 
   let debounceTimeout: NodeJS.Timeout | null = null;
 
-  // Fetch products from Supabase
-  async function fetchProducts(
-    searchQuery: string = "",
-    rangeStart: number = 0
-  ) {
-    let queryBuilder = SClient.from("Product").select("*");
 
-    // If there's a search query, use full-text search
-    if (searchQuery.length > 0) {
-      if (searchQuery.length < 3) return { data: [], error: null }; // Do not search for very short queries
-      queryBuilder = queryBuilder.textSearch(
-        "fts",
-        searchQuery.replace(" ", "+")
-      );
-    }
 
-    // Define the range for pagination
-    queryBuilder = queryBuilder.range(rangeStart, rangeStart + limit - 1);
-
-    const { data: productsData, error } = await queryBuilder;
-    if (error) {
-      console.error("Error loading items from Supabase:", error);
-    }
-
-    return { data: productsData, error };
-  }
 
   // Load more items for infinite scroll
   async function loadMoreItems() {
@@ -67,7 +43,10 @@
   async function search() {
     if (query.length < 3 && query.length > 0) return; // Ignore very short queries
 
-    const { data: productsData, error } = await fetchProducts(query);
+    const { data: productsData, error } = await fetchProducts(
+      20,
+      query,
+    );
     if (!error && productsData) {
       // Replace existing items with the search result or load all items if query is empty
       data = { items: productsData };
