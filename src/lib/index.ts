@@ -16,7 +16,7 @@ import { browser } from "$app/environment";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 
-let supabaseKey: string | undefined;
+let supabaseKey: string = "";
 
 if (browser) {
   supabaseKey = import.meta.env.VITE_SUPABASE_KEY; // Use VITE_ prefix for client access
