@@ -115,6 +115,8 @@
   });
 </script>
 
+<title>TSKEV - Kantin</title>
+
 <!-- Search Bar -->
 <div
   class="flex px-4 py-3 border-b border-[#333] overflow-hidden max-w-md mx-auto font-[sans-serif]"
