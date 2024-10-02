@@ -6,6 +6,7 @@ Bu proje, Haydarpaşa TSKEV kantinindeki ürünlerin listesini sunan, can sıkı
 
 - **Ürün Arama**: Kullanıcıların ürünleri hızlıca bulabilmesi için tam işlevsel bir arama özelliği.
 - **Duyarlı Tasarım**: Tailwind CSS ile oluşturulmuş duyarlı bir tasarım, tüm cihazlarda uyumlu.
+- **Ürün Kategorileri**: Kullanıcıların masaüstünde solda, mobilde üstte kategorileri filtrelemesine yardımcı oluyor.
 
 ## Kullanılan Teknolojiler
 
@@ -16,7 +17,6 @@ Bu proje, Haydarpaşa TSKEV kantinindeki ürünlerin listesini sunan, can sıkı
 
 ## Gelecek Planları
 
-- **Kategori Seçimi**: Yakında kullanıcılar ürünleri kategoriye göre filtreleyebilecek.
 - **Günlük Yemek Listesi**: Günlük yemek menüsünü gösterecek bir özellik planlanıyor.
 
 ## Uyarılar
