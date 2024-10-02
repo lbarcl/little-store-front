@@ -15,10 +15,6 @@ export interface Item {
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 
-let process: any;
-
-const p = process?.env ? process.env : import.meta.env;
-
 export const SClient = createClient<Database>(
   "https://vyssbmnzigywmtcttpul.supabase.co",
   process.env.SUPABASE_KEY
