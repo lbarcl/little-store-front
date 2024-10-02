@@ -10,5 +10,24 @@ export const load: PageLoad = async ({ params }) => {
     e(500, "Veritabanı hatası.");
   }
 
-  return { items: data };
+  const { data: CData, error: CError } = await SClient.from("Category").select(
+    "*"
+  );
+
+  if (CError) {
+    console.error(CError);
+    e(500, "Veritabanı hatası.");
+  }
+
+  const newData: Record<string, Array<{ sub: string; id: number }>> = {};
+
+  CData.forEach((cat) => {
+    try {
+      newData[cat.name].push({ sub: cat.subcategory || "", id: cat.id });
+    } catch (error) {
+      newData[cat.name] = [{ sub: cat.subcategory || "", id: cat.id }];
+    }
+  });
+
+  return { items: data, categories: newData };
 };
