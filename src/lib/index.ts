@@ -16,15 +16,25 @@ import { browser } from "$app/environment";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./database.types";
 
-let supabaseKey: string = "";
+// Use a fallback to handle cases where the key is not defined
+const supabaseUrl = "https://vyssbmnzigywmtcttpul.supabase.co";
+let supabaseKey: string | undefined;
 
 if (browser) {
-  supabaseKey = import.meta.env.VITE_SUPABASE_KEY; // Use VITE_ prefix for client access
+  supabaseKey = import.meta.env.VITE_SUPABASE_KEY; // Ensure this is available on the client side
+
+  // Optional: Log an error if the key is not available
+  if (!supabaseKey) {
+    console.error(
+      "Supabase key is not defined. Check your environment variable."
+    );
+  }
 }
 
+// Initialize Supabase client, but ensure the key is defined
 export const SClient = createClient<Database>(
-  "https://vyssbmnzigywmtcttpul.supabase.co",
-  supabaseKey
+  supabaseUrl,
+  supabaseKey || "" // Provide a default value to avoid undefined
 );
 
 export async function fetchProducts(
